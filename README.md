@@ -1,7 +1,5 @@
 # Sprited GMENU
 TYPO3 extension, available in TYPO3 extension repository: http://typo3.org/extensions/repository/view/ggspritedgmenu/current/
-Copyright 2011 Georg Grossberger (georg@grossberger.at)
-Based on the GTMenu script, (c) 2005 by Stefan Beylen and Torsten Schrade 
 
 ## About
 This is a TYPO3 extension, that enhances the popular GTMenu script to generate a single sprite instead of many single images.
@@ -13,6 +11,10 @@ Credits go to Stefan Beylen and Torsten Schrade who created the GTMenu script, a
 Clone the repository into your typo3conf/ext/ folder, or simply load it from the TER with the Extension Manager. Extension key is "ggspritedgmenu". Once it's there, install it (via the Extension Manager).
 
 On how to use it in your installation, please read the manual in the doc folder, or online at http://typo3.org/documentation/document-library/extension-manuals/ggspritedgmenu/0.1.2/view/
+
+## Copyright
+* (c) 2011 Georg Grossberger (georg@grossberger.at)
+* Based on the GTMenu script, (c) 2005 by Stefan Beylen and Torsten Schrade 
 
 ## License
 This program is free software: you can redistribute it and/or modify
