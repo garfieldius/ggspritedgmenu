@@ -1,0 +1,5 @@
+a.gt-#id# {
+	background-position:0 -#offset#px;
+	height: #height#px;
+	width: #width#px;
+}

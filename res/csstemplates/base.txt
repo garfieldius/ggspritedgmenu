@@ -1,0 +1,16 @@
+
+a.gt-menu{
+	background-image:url(#sprite#);
+	display: block;
+	text-decoration: none;
+	background-repeat:no-repeat;
+	vertical-align:bottom;
+}
+
+a.gt-menu SPAN{
+	display: block;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	text-indent: -9999px;
+}
