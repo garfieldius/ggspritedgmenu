@@ -69,10 +69,9 @@ class tx_ggspritedgmenu_pi1 {
 
 		// Count through the items
 		$uniqueString = $collector->getNextId();
-
 		// Set needed infos for the TCE
 		$I['linkHREF']['class']	= 'gt-menu gt-' . $uniqueString;
-		$I['parts']['image']	= htmlspecialchars($I['title']);
+		$I['parts']['image']	= htmlspecialchars($I['title'], ENT_QUOTES, $GLOBALS['TSFE']->metaCharset, false);
 		$conf['parentObj']->I 	= $I;
 		$conf['parentObj']->setATagParts();
 
