@@ -40,7 +40,7 @@ class tx_ggspritedgmenu_collector implements t3lib_Singleton, Iterator, Countabl
 
 	protected $images  = array();
 
-	protected $counter = 0;
+	protected static $counter = 0;
 
 	protected $spriteImage = null;
 	
@@ -67,7 +67,7 @@ class tx_ggspritedgmenu_collector implements t3lib_Singleton, Iterator, Countabl
 		if (!is_null($rollover)) {
 			$rollover = t3lib_div::makeInstance('tx_ggspritedgmenu_image')->setImage($rollover);
 		}
-		$this->images[ $this->counter ] = array(
+		$this->images[ self::$counter ] = array(
 			'normal'	=> $normal,
 			'rollover'	=> $rollover
 		);
@@ -80,8 +80,8 @@ class tx_ggspritedgmenu_collector implements t3lib_Singleton, Iterator, Countabl
 	 * @return Integer
 	 */
 	public function getNextId() {
-		$this->counter++;
-		return $this->counter;
+		self::$counter++;
+		return self::$counter;
 	}
 
 	/**
@@ -102,7 +102,7 @@ class tx_ggspritedgmenu_collector implements t3lib_Singleton, Iterator, Countabl
 	 */
 	public function getSpriteImage() {
 		if (is_null($this->spriteImage)) {
-			$this->spriteImage = 'typo3temp/GB/' . md5(microtime()) . '.png';
+			$this->spriteImage = 'typo3temp/GB/' . md5(serialize($this->images)) . '.png';
 		}
 		return $this->spriteImage;
 	}
