@@ -43,6 +43,8 @@ class tx_ggspritedgmenu_collector implements t3lib_Singleton, Iterator, Countabl
 	protected $counter = 0;
 
 	protected $spriteImage = null;
+	
+	protected $cursor = 0;
 
 	/**
 	 * Add an image to the sprite array
@@ -123,27 +125,23 @@ class tx_ggspritedgmenu_collector implements t3lib_Singleton, Iterator, Countabl
 
 
     public function rewind() {
-        reset($this->images);
+        $this->cursor = 0;
     }
 
     public function current() {
-        $var = current($this->images);
-        return $var;
+        $this->images[ $this->cursor ];
     }
 
     public function key() {
-        $var = key($this->images);
-        return $var;
+        return $this->cursor;
     }
 
     public function next() {
-        $var = next($this->images);
-        return $var;
+        $this->cursor++;
     }
 
     public function valid() {
-        $var = $this->current() !== false;
-        return $var;
+       return $this->cursor >= $this->count();
     }
 
     /**
