@@ -72,7 +72,7 @@ class tx_ggspritedgmenu_pi1 {
 
 		// Set needed infos for the TCE
 		$I['linkHREF']['class']	= 'gt-menu gt-' . $uniqueString;
-		$I['parts']['image']	= $I['title'];
+		$I['parts']['image']	= htmlspecialchars($I['title']);
 		$conf['parentObj']->I 	= $I;
 		$conf['parentObj']->setATagParts();
 
