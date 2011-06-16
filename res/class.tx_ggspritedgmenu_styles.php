@@ -48,7 +48,7 @@ class tx_ggspritedgmenu_styles implements t3lib_Singleton {
 		$template = $this->getTemplate();
 		$offset	  = 0;
 
-		foreach ($collector as $id => $menupoint) {
+		foreach ($collector->getCollection() as $id => $menupoint) {
 
 			$normal   = $menupoint['normal'];
 			$rollover = $menupoint['rollover'];
@@ -79,7 +79,7 @@ class tx_ggspritedgmenu_styles implements t3lib_Singleton {
 			}
 		}
 
-		$image = md5(serialize($collector)) . '.png';
+		$image = md5(serialize($collector->getCollection())) . '.png';
 		$collector->setSpriteImage($image);
 
 		$spriteImage = 'GB/' . $image;

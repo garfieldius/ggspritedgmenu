@@ -91,7 +91,7 @@ class tx_ggspritedgmenu_pi1 {
 
 		// Add to stylesheet
 		t3lib_div::makeInstance('tx_ggspritedgmenu_styles')->generate(
-			$collector->addImage($image, $rollover)
+			$collector->addImage($image, $rollover, $uniqueString)
 		);
 
 		return $I;

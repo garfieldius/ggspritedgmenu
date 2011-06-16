@@ -36,15 +36,13 @@
  * @author Georg Grossberger <georg@grossberger.at>
  * @license http://www.gnu.org/licenses/gpl-3.0.html GNU GPL v3
  */
-class tx_ggspritedgmenu_collector implements t3lib_Singleton, Iterator, Countable {
+class tx_ggspritedgmenu_collector implements t3lib_Singleton {
 
 	protected $images  = array();
 
 	protected $counter = 0;
 
 	protected $spriteImage = null;
-	
-	protected $cursor = 0;
 
 	/**
 	 * Add an image to the sprite array
@@ -53,7 +51,7 @@ class tx_ggspritedgmenu_collector implements t3lib_Singleton, Iterator, Countabl
 	 * @param String $rollover
 	 * @return tx_ggspritedmenu_collector
 	 */
-	public function addImage($normal, $rollover = null) {
+	public function addImage($normal, $rollover = null, $id = null) {
 
 		if (!is_file($normal)) {
 			t3lib_div::sysLog(
@@ -67,7 +65,12 @@ class tx_ggspritedgmenu_collector implements t3lib_Singleton, Iterator, Countabl
 		if (!is_null($rollover)) {
 			$rollover = t3lib_div::makeInstance('tx_ggspritedgmenu_image')->setImage($rollover);
 		}
-		$this->images[ $this->counter ] = array(
+		
+		if (!is_int($id) || $id < 0 || isset($this->images[$id])) {
+			$id = $this->counter;
+		}
+		
+		$this->images[ $id ] = array(
 			'normal'	=> $normal,
 			'rollover'	=> $rollover
 		);
@@ -80,8 +83,7 @@ class tx_ggspritedgmenu_collector implements t3lib_Singleton, Iterator, Countabl
 	 * @return Integer
 	 */
 	public function getNextId() {
-		$this->counter++;
-		return $this->counter;
+		return $this->counter++;
 	}
 
 	/**
@@ -102,7 +104,7 @@ class tx_ggspritedgmenu_collector implements t3lib_Singleton, Iterator, Countabl
 	 */
 	public function getSpriteImage() {
 		if (is_null($this->spriteImage)) {
-			$this->spriteImage = 'typo3temp/GB/' . md5(microtime()) . '.png';
+			$this->spriteImage = 'typo3temp/GB/' . md5(serialize($this->images)) . '.png';
 		}
 		return $this->spriteImage;
 	}
@@ -113,43 +115,11 @@ class tx_ggspritedgmenu_collector implements t3lib_Singleton, Iterator, Countabl
 	 * @return Boolean True if no items collected, true if there are
 	 */
 	public function isEmpty() {
-		return $this->count() < 1;
+		return count($this->images) < 1;
 	}
 
-	/**
-     * The following code is a minimal implementation of the Iterator
-     * interface, so we can traverse the images using the foreach construct.
-     * This section is a slightly modified piece of code, available at
-	 * http://www.php.net/manual/en/language.oop5.iterations.php
-	 */
-
-
-    public function rewind() {
-        $this->cursor = 0;
-    }
-
-    public function current() {
-        $this->images[ $this->cursor ];
-    }
-
-    public function key() {
-        return $this->cursor;
-    }
-
-    public function next() {
-        $this->cursor++;
-    }
-
-    public function valid() {
-       return $this->cursor >= $this->count();
-    }
-
-    /**
-     * Implements the Contable interface
-     */
-
-    public function count() {
-    	return count($this->images);
-    }
+	public function getCollection() {
+		return $this->images;
+	}
 }
 ?>

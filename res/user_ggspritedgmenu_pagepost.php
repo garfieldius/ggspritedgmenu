@@ -63,12 +63,12 @@ class user_ggspritedgmenu_pagepost {
 			return $this;
 		}
 
-		$collector  = $this->getCollector();
+		$collector  = $this->getCollector()->getCollection();
 		$width 		= 0;
 		$height 	= 0;
 		$config		= array();
 		$c			= 1;
-
+			
 		// Compile a IMG_RESOURCE setup, which will merge images
 		foreach ($collector as $id => $menupoint) {
 
@@ -115,7 +115,7 @@ class user_ggspritedgmenu_pagepost {
 		));
 
 		// Move to desired location
-		rename($sprite, 'typo3temp/GB/' . $collector->getSpriteImage());
+		rename($sprite, 'typo3temp/GB/' . $this->getCollector()->getSpriteImage());
 
 		// Make sure we do not do this twice (should never occur anyway)
 		self::$alreadyDone = TRUE;
