@@ -68,7 +68,7 @@ class user_ggspritedgmenu_pagepost {
 		$height 	= 0;
 		$config		= array();
 		$c			= 1;
-			
+
 		// Compile a IMG_RESOURCE setup, which will merge images
 		foreach ($collector as $id => $menupoint) {
 
@@ -105,13 +105,22 @@ class user_ggspritedgmenu_pagepost {
 		}
 
 		// Now create it
+        if (version_compare(TYPO3_branch, '4.6', '>=')) {
+            $fileConfig = array(
+                'XY'		=> $width . ',' . $height,
+                'backColor'	=> 'transparent'
+            );
+        }
+        else {
+            $fileConfig = array(
+                'XY'					=> $width . ',' . $height,
+                'format'				=> 'png',
+                'transparentBackground' => true
+            );
+        }
 		$sprite = $GLOBALS['TSFE']->cObj->IMG_RESOURCE(array(
 			'file' => 'GIFBUILDER',
-			'file.' => array(
-				'XY'					=> $width . ',' . $height,
-				'format'				=> 'png',
-				'transparentBackground' => true
-			) + $config
+			'file.' => $fileConfig + $config
 		));
 
 		// Move to desired location
