@@ -89,6 +89,11 @@ class tx_ggspritedgmenu_pi1 {
 			$rollover = $conf['parentObj']->result['RO'][ $I['key'] ]['output_file'];
 		}
 
+        if ($GLOBALS['TSFE']->config['config']['absRefPrefix']) {
+            $image = str_replace($GLOBALS['TSFE']->config['config']['absRefPrefix'], '', $image);
+            $rollover = str_replace($GLOBALS['TSFE']->config['config']['absRefPrefix'], '', $rollover);
+        }
+
 		// Add to stylesheet
 		t3lib_div::makeInstance('tx_ggspritedgmenu_styles')->generate(
 			$collector->addImage($image, $rollover, $uniqueString)
