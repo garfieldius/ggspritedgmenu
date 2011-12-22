@@ -91,7 +91,15 @@ class tx_ggspritedgmenu_styles implements t3lib_Singleton {
 		$content = $template->setTemplate( tx_ggspritedgmenu_csstemplate::TEMPLATE_BASE )->setMarker('sprite', $spriteImage)->render()
 					. $content;
 
-		$GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_ggspritedgmenu_pi1.']['_CSS_DEFAULT_STYLE'] = $content;
+        if ($GLOBALS['TSFE']->config['config']['concatenateJsAndCss']) {
+            $content = str_replace('background-image:url(', 'background-image:url(../', $content);
+            $filename = 'typo3temp/compressor/tx_ggspritedgmenu_' . md5($content) . '.css';
+            file_put_contents(PATH_site . $filename, $content, LOCK_EX);
+            $GLOBALS['TSFE']->additionalHeaderData['tx_ggspritedgmenu'] = '<link rel="stylesheet" type="text/css" href="'.$filename . '"' . (strpos($GLOBALS['TSFE']->config['config']['doctype'], 'xhtml') !== FALSE ? ' />' : '>');
+        }
+        else {
+		    $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_ggspritedgmenu_pi1.']['_CSS_DEFAULT_STYLE'] = $content;
+        }
 		return $this;
 	}
 
